@@ -37,6 +37,7 @@
         <servlet-name>jspf</servlet-name>
         <servlet-class>login.jspf</servlet-class>
     </servlet>
+    <!-- SERVLET MAPPING -->
     <servlet-mapping>
         <servlet-name>HelloWorldServlet</servlet-name>
         <url-pattern>/HelloWorldServlet</url-pattern>
@@ -73,11 +74,19 @@
         <servlet-name>jspf</servlet-name>
         <url-pattern>/jspf</url-pattern>
     </servlet-mapping>
+    <!-- SESSION CONFIG -->
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    
+    <!-- SECURITY ROLES -->
+    
+    <!-- SECURITY CONSTRAINTS -->
+    
+    
+    <!-- WELCOME FILE LIST -->
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
         <welcome-file>index.jsp</welcome-file>

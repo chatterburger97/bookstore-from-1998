@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 /**
  *
  * @author chatterburger
+ * 
+ * Uses login service to check whether user is authenticated in admin or user role
+ * Sends boolean success as a context variable that can be accessed from within the page, so if login is unsuccessful an
+ * error message can be displayed on the same page
+ * If login as admin succeeds, redirects to admin/view servlet (ends up at admin/dashboard.jsp)
+ * If login as user succeeds, redirects to user/view servlet (ends up at browsebooks.jsp)
  */
 public class LoginServlet extends HttpServlet {
 
