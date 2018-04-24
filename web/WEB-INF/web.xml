@@ -17,6 +17,22 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>bookStore.web.servlets.RegisterServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>bookStore.web.servlets.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminViewServlet</servlet-name>
+        <servlet-class>bookStore.web.servlets.AdminViewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserViewServlet</servlet-name>
+        <servlet-class>bookStore.web.servlets.UserViewServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HelloWorldServlet</servlet-name>
         <url-pattern>/HelloWorldServlet</url-pattern>
@@ -32,6 +48,22 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminViewServlet</servlet-name>
+        <url-pattern>/admin/view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserViewServlet</servlet-name>
+        <url-pattern>/user/view</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
