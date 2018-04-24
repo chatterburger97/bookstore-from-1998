@@ -3,7 +3,7 @@
 <div>
     <!-- takes care of what to redirect to -->
     
-    <!-- will redirect to dashboard.jspf if admin is already logged in, otherwise will take you to admin login page-->
+    <!-- will redirect to dashboard.jspf if admin is already logged in, otherwise will take you to login page-->
     <form action="${pageContext.request.contextPath}/admin/view" method="POST">
         <button type="submit" value="adminlogin">ADMIN LOGIN</button>
     </form>
