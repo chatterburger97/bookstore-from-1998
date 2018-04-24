@@ -33,6 +33,10 @@
         <servlet-name>UserViewServlet</servlet-name>
         <servlet-class>bookStore.web.servlets.UserViewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>jspf</servlet-name>
+        <servlet-class>login.jspf</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HelloWorldServlet</servlet-name>
         <url-pattern>/HelloWorldServlet</url-pattern>
@@ -64,6 +68,10 @@
     <servlet-mapping>
         <servlet-name>UserViewServlet</servlet-name>
         <url-pattern>/user/view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>jspf</servlet-name>
+        <url-pattern>/jspf</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
