@@ -4,15 +4,15 @@
     <!-- takes care of what to redirect to -->
     
     <!-- will redirect to dashboard.jspf if admin is already logged in, otherwise will take you to admin login page-->
-    <form action="${pageContext.request.contextPath}/AdminViewServlet" method="POST">
+    <form action="${pageContext.request.contextPath}/admin/view" method="POST">
         <button type="submit" value="adminlogin">ADMIN LOGIN</button>
     </form>
     <!-- whatever form action it is over here will also send the allbooks object with the servlet forwarding thingummy -->
     <!-- servlet will redirect to browsebooks.jspf if the user is already authenticated -->
-    <form action="${pageContext.request.contextPath}/UserViewServlet" method="POST">
+    <form action="${pageContext.request.contextPath}/user/view" method="POST">
         <button type="submit" value="userlogin">USER LOGIN</button>
     </form>
-    <form action="${pageContext.request.contextPath}/RegisterServlet" method="POST">
+    <form action="${pageContext.request.contextPath}/register" method="POST">
         <button type="submit" value="register">REGISTER</button>
     </form>
 </div>

@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <servlet>
-        <servlet-name>HelloWorldServlet</servlet-name>
-        <servlet-class>test1.HelloWorldServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>HelloFormServlet</servlet-name>
-        <servlet-class>test1.HelloFormServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>BookServlet</servlet-name>
-        <servlet-class>test2.BookServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
@@ -80,12 +68,7 @@
             30
         </session-timeout>
     </session-config>
-    
-    <!-- SECURITY ROLES -->
-    
-    <!-- SECURITY CONSTRAINTS -->
-    
-    
+
     <!-- WELCOME FILE LIST -->
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
