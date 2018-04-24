@@ -55,7 +55,7 @@
                 </tbody>
             </table>
             
-            <c:if test="${empty requestScope.allbookings}">
+            <c:if test="${empty requestScope.allbooks}">
                 <div class="alert alert-info">
                     <div align="center">No Room Assigned to the User.</div>
                 </div>
