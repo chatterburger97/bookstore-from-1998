@@ -5,13 +5,19 @@
  */
 package bookStore.web.servlets;
 
+import bookStore.core.domain.Book;
+import bookStore.core.domain.UserRole;
+import bookStore.core.services.UserService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import bookStore.core.jdbc.BookDBHandler;
+import java.util.ArrayList;
 /**
  *
  * @author chatterburger
@@ -44,7 +50,6 @@ public class UserViewServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -56,7 +61,21 @@ public class UserViewServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("currentuser");
+        request.authenticate(response);
+        boolean authorised = UserService.checkAccess(request, UserRole.USR);
+        if(authorised){
+            String nextJspPage = "/views/user/browsebooks.jsp";
+            // BookDBHandler db = new BookDBHandler();
+            ArrayList<Book> allBooks = new ArrayList<>(); //  = db.retrieveTopNBooks(10)
+            request.setAttribute("username", username);
+            request.setAttribute("allBooks", allBooks); // @TODO
+            getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
+        } else {
+            response.sendRedirect("../login");
+        }
     }
 
     /**

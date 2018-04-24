@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-     <servlet>
+    <servlet>
         <servlet-name>AdminViewServlet</servlet-name>
         <servlet-class>bookStore.web.servlets.AdminViewServlet</servlet-class>
+        <security-role-ref>
+            <role-name>usr</role-name>
+            <role-link>customer</role-link>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>admin</role-name>
+            <role-link>manager</role-link>
+        </security-role-ref>
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -15,6 +23,18 @@
     <servlet>
         <servlet-name>UserViewServlet</servlet-name>
         <servlet-class>bookStore.web.servlets.UserViewServlet</servlet-class>
+        <security-role-ref>
+            <role-name>usr</role-name>
+            <role-link>customer</role-link>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>admin</role-name>
+            <role-link>manager</role-link>
+        </security-role-ref>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>bookStore.web.servlets.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminViewServlet</servlet-name>
@@ -32,11 +52,22 @@
         <servlet-name>UserViewServlet</servlet-name>
         <url-pattern>/user/view</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <!-- SECURITY ROLES -->
+    <security-role>
+        <role-name>customer</role-name>
+    </security-role>
+    <security-role>
+        <role-name>manager</role-name>
+    </security-role>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
