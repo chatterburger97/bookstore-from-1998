@@ -24,11 +24,7 @@ import java.util.ArrayList;
  */
 public class BookDBHandler extends DBHandler {
 
-    private void createBook() {
-
-    }
-
-    private ArrayList<Book> retrieveTopNBooks(int N) {
+    public ArrayList<Book> retrieveTopNBooks(int N) {
 
         ArrayList<Book> topNBooks = new ArrayList<>();
         try {
@@ -55,7 +51,7 @@ public class BookDBHandler extends DBHandler {
         return topNBooks;
     }
 
-    private ArrayList<Book> retrieveBooksByGenre(String genre) {
+    public ArrayList<Book> retrieveBooksByGenre(String genre) {
         
         ArrayList<Book> booksByGenre = new ArrayList<>();
         try {
@@ -81,12 +77,14 @@ public class BookDBHandler extends DBHandler {
         return booksByGenre;
     }
 
+    private void createBook(){
+        
+    }
     private void updateBook(int bookID, Book newBook) {
 
     }
 
     private void deleteBook(int bookID) {
-
     }
 
 }
