@@ -69,9 +69,8 @@ public class UserViewServlet extends HttpServlet {
         
         if(currentUserRole.equals("usr")){
             String nextJspPage = "/views/user/browsebooks.jsp";
-            // BookDBHandler db = new BookDBHandler();
-            ArrayList<Book> allBooks = new ArrayList<>(); //  = db.retrieveTopNBooks(10)
-            request.setAttribute("username", currentUserName);
+            BookDBHandler db = new BookDBHandler();
+            ArrayList<Book> allBooks = db.retrieveTopNBooks(10);
             request.setAttribute("allBooks", allBooks); // @TODO
             getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
         } else {

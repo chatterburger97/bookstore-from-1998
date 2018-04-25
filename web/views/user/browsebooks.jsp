@@ -29,21 +29,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${requestScope.allbooks}" var="book">
+                <p>${requestScope.allBooks}</p>
+                    <c:forEach items="${requestScope.allBooks}" var="bookDetails">
+                        <p>Inside the foreach loop : ${bookDetails} </p>
                         <tr>
-                            <td>${book.bookID}</td>
-                            <td>${book.title}</td>
-                            <td>${book.authorID}</td>
-                            <td>${book.genre}</td>
-                            <td>${book.description}</td>
-                            <td>${book.ISBN}</td>
+                            <td>${bookDetails.ID}</td>
+                            <td>${bookDetails.title}</td>
+                            <td>${bookDetails.author}</td>
+                            <td>${bookDetails.genre}</td>
+                            <td>${bookDetails.description}</td>
+                            <td>${bookDetails.ISBN}</td>
                             <td>
                                 <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/ViewBook" method="get">
-                                    <input type="hidden" name="bookID" value="${book.bookID}">
+                                    <input type="hidden" name="bookID" value="${bookDetails.ID}">
                                     <button type="submit" class="btn btn-warning">See detail</button>
                                 </form>
                                 <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/AddToCart" method="post">
-                                    <input type="hidden" name="Bookinguserid" value="${book.bookID}">
+                                    <input type="hidden" name="bookID" value="${bookDetails.ID}">
                                     <br><br>
                                     <button type="submit" class="btn btn-success">Quick Add</button>
                                 </form>
