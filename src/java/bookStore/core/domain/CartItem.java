@@ -20,11 +20,12 @@ public class CartItem {
     public void setQty(int qty){
         this.qty = qty;
     }
-    
+
     public int getQty(){
-        return this.qty;
+        return qty;
     }
     public Book getAddedBook(){
-        return this.addedBook;
+        return addedBook;
     }
+    
 }
