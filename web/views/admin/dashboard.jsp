@@ -12,6 +12,11 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>All books in stock : </h1>
+        <p> Todo : show the books that are in stock <b>Update prices</b> <b>Remove book</b> </p>
+        <form action="${pageContext.request.contextPath}/admin/addbook" method="GET">
+            <input type="submit" value="Add new book"/>
+        </form>
+        
     </body>
 </html>
