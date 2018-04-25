@@ -18,15 +18,15 @@ import javax.servlet.http.HttpSession;
 /**
  *
  * @author chatterburger
- * 
- * Uses login service to check whether user is authenticated in admin or user role
- * Sends boolean success as a context variable that can be accessed from within the page, so if login is unsuccessful an
- * error message can be displayed on the same page
- * If login as admin succeeds, redirects to admin/view servlet (ends up at admin/dashboard.jsp)
- * If login as user succeeds, redirects to user/view servlet (ends up at browsebooks.jsp)
+ *
+ * Uses login service to check whether user is authenticated in admin or user
+ * role Sends boolean success as a context variable that can be accessed from
+ * within the page, so if login is unsuccessful an error message can be
+ * displayed on the same page If login as admin succeeds, redirects to
+ * admin/view servlet (ends up at admin/dashboard.jsp) If login as user
+ * succeeds, redirects to user/view servlet (ends up at browsebooks.jsp)
  */
 public class LoginServlet extends HttpServlet {
-
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -53,21 +53,21 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = (String)request.getParameter("username");
-        String password = (String)request.getParameter("password");
-       
-        if(UserService.checkAccess(request, username, password, UserRole.ADMINUSR)){
+        String username = (String) request.getParameter("username");
+        String password = (String) request.getParameter("password");
+
+        if (UserService.checkAccess(request, username, password, UserRole.ADMINUSR)) {
             System.out.println("admin user found");
             String nextServlet = "admin/view";
             response.sendRedirect(nextServlet);
-        } else if (UserService.checkAccess(request, username, password, UserRole.USR)){
+        } else if (UserService.checkAccess(request, username, password, UserRole.USR)) {
             System.out.println("usr found");
             String nextServlet = "user/view";
             response.sendRedirect(nextServlet);
         } else {
             System.out.println("no user found, redirecting to login");
             getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
-        }  
+        }
     }
 
     /**

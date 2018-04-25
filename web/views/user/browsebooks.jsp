@@ -39,16 +39,24 @@
                        <td>${bookDetail.ISBN}</td>
                        <td>${bookDetail.description}</td>
                        <td>
-                          <a href="../addtocart?code=${bookDetail.id}">Add to cart</a>
+                          <a href="../addtocart?bookID=${bookDetail.id}&bookName=${bookDetail.title}">Add to cart</a>
                        </td>
                     </tr>
                  </c:forEach>
             </tbody>
         </table>
-
+    <c:if test="${not empty sessionScope.lastAddedToCart}">
+        <div>
+            <div align="center">
+                <p style="color:green">Successfully added the book to cart : ${sessionScope.lastAddedToCart}</p>
+            </div>
+        </div>
+    </c:if>    
     <c:if test="${empty requestScope.allBooks}">
         <div>
-            <div align="center">No  books in stock.</div>
+            <div align="center">
+                <p style="color:red">No more books in stock.</p>
+            </div>
         </div>
     </c:if>
 </body>

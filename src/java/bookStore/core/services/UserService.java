@@ -26,11 +26,10 @@ public class UserService {
             System.out.println("could not connect to database");
             return false;
         }
-        String errorString;
-        System.out.println("Username "+ username);
-        System.out.println("Password" + password);
+        
+
         if(username == null || username.equals("") || password == null || password.equals("")){
-            errorString = "Required fields for login!";
+            String errorString = "Required fields for login!";
             System.out.println("required fields for login");
             request.setAttribute("errorString", errorString);
             return false;
@@ -38,12 +37,16 @@ public class UserService {
         
         User foundUser = db.findUser(db.getConnection(), username, password);
         if (foundUser == null){
-            errorString = "Invalid credentials! Please try again.";
+            String errorString = "Invalid credentials! Please try again.";
             System.out.println("did not find user in database");
             request.setAttribute("errorString", errorString);
             return false;
         } else {
             HttpSession session = request.getSession(false);
+            if(session!=null){
+                session.invalidate();
+            }
+            session = request.getSession();
             session.setAttribute("currentUserRole",foundUser.getRole());
             session.setAttribute("currentUserName", foundUser.getName());
             
