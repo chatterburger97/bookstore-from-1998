@@ -39,7 +39,7 @@
                        <td>${bookDetail.ISBN}</td>
                        <td>${bookDetail.description}</td>
                        <td>
-                          <a href="../addtocart?bookID=${bookDetail.id}&bookName=${bookDetail.title}">Add to cart</a>
+                          <a href="../addtocart?bookID=${bookDetail.id}">Add to cart</a>
                        </td>
                     </tr>
                  </c:forEach>

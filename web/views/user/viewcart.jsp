@@ -21,14 +21,16 @@
         <table border="1">
             <thead>
                     <th><b>Book name<b></th>
+                    <th><b>Unit price<b></th>
                     <th><b>Quantity</b></th>
             </thead>
             <tbody>
-           
+
                 <c:forEach items="${sessionScope.cart}" var="cartDetail" >
                     <tr>
-                       <td>${cartDetail.key}</td>
-                       <td>${cartDetail.value}</td>
+                       <td>${cartDetail.value.addedBook.title}</td>
+                       <td>${cartDetail.value.addedBook.price}</td>
+                       <td>${cartDetail.value.qty}</td>
                        <td>
                           <a href="../removefromcart?bookID=${cartDetail.key}">Remove</a>
                        </td>
@@ -36,10 +38,10 @@
                 </c:forEach>
             </tbody>
         </table>
-        <form method="GET" action="../user/checkout?storecredit">
+        <form method="GET" action="../user/checkout?paymentmethod=loyalty">
             <input type="submit" value="Checkout with store credit"/>
         </form>
-        <form method="GET" action="../user/checkout?creditcard">
+        <form method="GET" action="../user/checkout?paymentmethod=creditcard">
             <input type="submit" value="Checkout with credit card"/>
         </form>
         <a href="../user/view"/>Browse books</a>
