@@ -61,8 +61,13 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nextJspPage = "/views/user/viewcart.jsp";
-        getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
+        HttpSession session = request.getSession();
+        if(session.getAttribute("currentUserRole") == null){
+            response.sendRedirect("login");
+        } else {
+            String nextJspPage = "/views/user/viewcart.jsp";
+            getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
+        }
     }
 
     /**

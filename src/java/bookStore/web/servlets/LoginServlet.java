@@ -55,7 +55,6 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String username = (String) request.getParameter("username");
         String password = (String) request.getParameter("password");
-        HttpSession session = request.getSession(false);
 
         if (UserService.checkAccess(request, username, password, UserRole.ADMINUSR)) {
             System.out.println("admin user found");

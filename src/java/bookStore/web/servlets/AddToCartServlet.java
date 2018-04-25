@@ -65,40 +65,20 @@ public class AddToCartServlet extends HttpServlet {
             throws ServletException, IOException {    
         HttpSession session = request.getSession();
         session.removeAttribute("lastAddedToCart");
-        
         if(request.getParameterMap().containsKey("bookID")){
             Integer bookID = Integer.parseInt(request.getParameter("bookID"));
-            
             String bookName = request.getParameter("bookName");
-            session.setAttribute("lastAddedToCart", bookName);
-            
-            
             HashMap<Integer, Integer> cart = new HashMap<>(); // bookId, qty pairs
-            if(session.getAttribute("currentcart")!=null){
-                System.out.println("cart variable found in session");
-                cart = (HashMap<Integer, Integer>)session.getAttribute("currentcart");
-                
-                System.out.println("the cart now has the following items : ");
-                if (session.getAttribute("cart") != null) {                   
-                    Iterator it = cart.entrySet().iterator();
-                    while (it.hasNext()) {
-                        Map.Entry pair = (Map.Entry) it.next();
-                        System.out.println(pair.getKey() + " = " + pair.getValue());
-                        it.remove(); // avoids a ConcurrentModificationException
-                    }
-                }
-            }
-            if(cart.get(bookID)!=null){
-                System.out.println("Adding to cart : " + bookID);
-                cart.put(bookID, cart.get(bookID) + 1);
+            if(session.getAttribute("cart")!=null){
+                cart = (HashMap<Integer, Integer>)session.getAttribute("cart");
+            } 
+            if(cart.get(bookID) != null){
+                cart.put(bookID, cart.get(bookID)+ + 1);
             } else {
-                System.out.println("Adding new book to cart : " + bookID);
                 cart.put(bookID, 1);
             }
-            
-            
+            session.setAttribute("lastAddedToCart", bookName);
             session.setAttribute("cart", cart);
-            
         }  
         response.sendRedirect("user/view");        
     }

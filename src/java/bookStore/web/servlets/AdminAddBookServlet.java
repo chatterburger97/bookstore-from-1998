@@ -49,7 +49,6 @@ public class AdminAddBookServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -61,12 +60,10 @@ public class AdminAddBookServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                HttpSession session = request.getSession();
-        String currentUserName = (String)session.getAttribute("currentUserName");
+        HttpSession session = request.getSession();
         String currentUserRole = (String)session.getAttribute("currentUserRole");
         
-        
-        if(currentUserRole!=null && currentUserRole.equals("admin")){
+        if(currentUserRole != null && currentUserRole.equals("admin")){
             String nextJspPage = "/views/admin/addbook.jsp";
             getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
         } else {
