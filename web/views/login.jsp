@@ -12,7 +12,7 @@
         <title>Login Page</title>
     </head>
     <body>
-        <form method="GET" action="${pageContext.request.contextPath}/login">
+        <form method="POST" action="${pageContext.request.contextPath}/login">
             <label for="username">User Name</label>
             <input type="text" id="username" name="username"/>
             <label for="password">Password</label>

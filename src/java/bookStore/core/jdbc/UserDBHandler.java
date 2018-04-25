@@ -22,7 +22,7 @@ public class UserDBHandler extends DBHandler {
     public User findUser(Connection connection, String username, String password){
         User foundUser = null;
         try {
-            String sqlQuery = "Select [name], [password], [role] from Users a where a.username = ? and a.password= ?";
+            String sqlQuery = "Select [name], [password], [role] from Users a where a.name = ? and a.password= ?";
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
             pstmt.setString(1, username);
             pstmt.setString(2, password);

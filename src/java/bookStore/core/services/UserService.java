@@ -9,6 +9,7 @@ import bookStore.core.domain.User;
 import bookStore.core.domain.UserRole;
 import bookStore.core.jdbc.UserDBHandler;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -18,28 +19,35 @@ public class UserService {
     public static final String ADMINUSR="admin";
     public static final String USR="usr";
     
-    public static boolean checkAccess(HttpServletRequest request, UserRole userRoleType){
-        // return request.isUserInRole(userRoleType.getRole());
-        String username = (String)request.getAttribute("username");
-        String password = (String)request.getAttribute("password");
-        UserDBHandler db = new UserDBHandler();
-        db.makeConnection();
-        String errorString = null;
+    public static boolean checkAccess(HttpServletRequest request, String username, String password, UserRole userRoleType){
         
-        if(username==null || username.equals("") || password == null || password.equals("")){
+        UserDBHandler db = new UserDBHandler();
+        if(db.makeConnection() == false){
+            System.out.println("could not connect to database");
+            return false;
+        }
+        String errorString;
+        System.out.println("Username "+ username);
+        System.out.println("Password" + password);
+        if(username == null || username.equals("") || password == null || password.equals("")){
             errorString = "Required fields for login!";
+            System.out.println("required fields for login");
             request.setAttribute("errorString", errorString);
             return false;
-        } 
-        User foundUser =db.findUser(db.getConnection(), username, password);
+        }
         
+        User foundUser = db.findUser(db.getConnection(), username, password);
         if (foundUser == null){
-            errorString = "Required fields for login!";
+            errorString = "Invalid credentials! Please try again.";
+            System.out.println("did not find user in database");
             request.setAttribute("errorString", errorString);
             return false;
         } else {
-            return true;
+            HttpSession session = request.getSession(false);
+            session.setAttribute("currentUserRole",foundUser.getRole());
+            session.setAttribute("currentUserName", foundUser.getName());
+            
+            return foundUser.getRole().equals(userRoleType.getRole());
         }
-
     }
 }

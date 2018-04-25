@@ -19,5 +19,13 @@ public class User {
         this.password = password;
         this.role = role;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public Object getName() {
+        return username; //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -63,14 +63,15 @@ public class UserViewServlet extends HttpServlet {
             throws ServletException, IOException {
                 
         HttpSession session = request.getSession();
-        String username = (String)session.getAttribute("currentuser");
-        request.authenticate(response);
-        boolean authorised = UserService.checkAccess(request, UserRole.USR);
-        if(authorised){
+        String currentUserName = (String)session.getAttribute("currentUserName");
+        String currentUserRole = (String)session.getAttribute("currentUserRole");
+        
+        
+        if(currentUserRole.equals("usr")){
             String nextJspPage = "/views/user/browsebooks.jsp";
             // BookDBHandler db = new BookDBHandler();
             ArrayList<Book> allBooks = new ArrayList<>(); //  = db.retrieveTopNBooks(10)
-            request.setAttribute("username", username);
+            request.setAttribute("username", currentUserName);
             request.setAttribute("allBooks", allBooks); // @TODO
             getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
         } else {

@@ -39,17 +39,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        if(UserService.checkAccess(request, UserRole.ADMINUSR)){
-            String nextServlet = "admin/view";
-            response.sendRedirect(nextServlet);
-        } else if (UserService.checkAccess(request, UserRole.USR)){
-            String nextServlet = "user/view";
-            response.sendRedirect(nextServlet);
-        } else {
-            getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
-        }
-        
+        getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
     }
 
     /**
@@ -63,6 +53,21 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String username = (String)request.getParameter("username");
+        String password = (String)request.getParameter("password");
+       
+        if(UserService.checkAccess(request, username, password, UserRole.ADMINUSR)){
+            System.out.println("admin user found");
+            String nextServlet = "admin/view";
+            response.sendRedirect(nextServlet);
+        } else if (UserService.checkAccess(request, username, password, UserRole.USR)){
+            System.out.println("usr found");
+            String nextServlet = "user/view";
+            response.sendRedirect(nextServlet);
+        } else {
+            System.out.println("no user found, redirecting to login");
+            getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
+        }  
     }
 
     /**
