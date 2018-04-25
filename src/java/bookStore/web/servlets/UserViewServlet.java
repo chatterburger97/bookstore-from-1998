@@ -66,6 +66,8 @@ public class UserViewServlet extends HttpServlet {
         String currentUserName = (String)session.getAttribute("currentUserName");
         String currentUserRole = (String)session.getAttribute("currentUserRole");
         
+        String lastAddedToCart = (String)session.getAttribute("lastAddedToCart");
+        System.out.println("last added to cart : " + lastAddedToCart);
         
         if(currentUserRole.equals("usr")){
             String nextJspPage = "/views/user/browsebooks.jsp";
