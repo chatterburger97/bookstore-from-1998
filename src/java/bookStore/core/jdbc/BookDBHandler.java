@@ -6,13 +6,11 @@
 package bookStore.core.jdbc;
 
 import bookStore.core.domain.*;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,7 +56,7 @@ public class BookDBHandler extends DBHandler {
     }
 
     public ArrayList<Book> retrieveBooksByGenre(String genre) {
-        
+
         ArrayList<Book> booksByGenre = new ArrayList<>();
         try {
             makeConnection();
@@ -85,13 +83,38 @@ public class BookDBHandler extends DBHandler {
     }
 
     private void createBook(){
-        
+
     }
     private void updateBook(int bookID, Book newBook) {
 
     }
 
     private void deleteBook(int bookID) {
+    }
+
+    public boolean addNewBook(Connection con, String title, String author, String bn, String genre, String description) {
+        if(con == null){
+                return false;
+        }
+        try {
+            System.out.println(title);
+            String sqlString = "INSERT INTO [Books]([title], [author], [isbn],[genre], [description]) VALUES(?,?,?,?,?)";
+            PreparedStatement pstmt = con.prepareStatement(sqlString);
+            pstmt.setString(1, title);
+            pstmt.setString(2, author);
+            pstmt.setString(3, bn);
+            pstmt.setString(4, genre);
+            pstmt.setString(5, description);
+            int executeUpdate = pstmt.executeUpdate();
+            System.out.println("execute update updates some rows : " + executeUpdate);
+            return (executeUpdate > 0);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDBHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } catch (Exception e){
+            System.out.println("exception");
+            return false;
+        }
     }
 
 }
