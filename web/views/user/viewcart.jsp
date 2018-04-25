@@ -14,6 +14,9 @@
         <title>Cart</title>
     </head>
     <body>
+        <header>
+            <%@ include file="./templates/header.jspf"%>
+        </header>
         <p> Cart : </p>
         <table border="1">
             <thead>

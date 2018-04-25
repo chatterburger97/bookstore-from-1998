@@ -22,14 +22,17 @@ public class UserDBHandler extends DBHandler {
     public User findUser(Connection connection, String username, String password){
         User foundUser = null;
         try {
-            String sqlQuery = "Select [name], [password], [role] from Users a where a.name = ? and a.password= ?";
+            String sqlQuery = "Select [role], [loyaltypoints], [ID] from Users a where a.name = ? and a.password= ?";
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
             pstmt.setString(1, username);
             pstmt.setString(2, password);
+            
             ResultSet rs = pstmt.executeQuery();
             if(rs.next()){
-                String role = rs.getString(3);
-                foundUser = new User(username, password, role);
+                String role = rs.getString(1);
+                int loyaltypoints = rs.getInt(2);
+                int ID = rs.getInt(3);
+                foundUser = new User(ID, username, password, role, loyaltypoints);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDBHandler.class.getName()).log(Level.SEVERE, null, ex);
