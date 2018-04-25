@@ -40,6 +40,10 @@
         <servlet-name>AddToCartServlet</servlet-name>
         <servlet-class>bookStore.web.servlets.AddToCartServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminAddBookServlet</servlet-name>
+        <servlet-class>bookStore.web.servlets.AdminAddBookServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminViewServlet</servlet-name>
         <url-pattern>/admin/view</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>AddToCartServlet</servlet-name>
         <url-pattern>/addtocart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminAddBookServlet</servlet-name>
+        <url-pattern>/admin/addbook</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
