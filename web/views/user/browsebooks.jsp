@@ -5,6 +5,7 @@
 --%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,48 +18,38 @@
             <%@ include file="./templates/header.jspf"%>
         </header>
         <h1>Latest books : </h1>
-                    <table class="table table-bordered table-striped">
-                <thead>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th><b>Book ID</b></th>
+                    <th><b>Title</b></th>
+                    <th><b>Author</b></th>
+                    <th><b>Genre/Category</b></th>
+                    <th><b>Short description</b></th>
+                    <th><b>ISBN</b></th>                        
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${requestScope.allBooks}" var="bookDetail" >
                     <tr>
-                        <th><h1><b>Book ID</b></h1></th>
-                        <th><h1><b>Title</b></h1></th>
-                        <th><h1><b>Author</b></h1></th>
-                        <th><h1><b>Genre/Category</b></h1></th>
-                        <th><h1><b>Short description</b></h1></th>
-                        <th><h1><b>ISBN</b></h1></th>                        
+                       <td>${bookDetail.id}</td>
+                       <td>${bookDetail.title}</td>
+                       <td>${bookDetail.author}</td>
+                       <td>${bookDetail.genre}</td>
+                       <td>${bookDetail.ISBN}</td>
+                       <td>${bookDetail.description}</td>
+                       <td>
+                          <a href="../addtocart?code=${bookDetail.id}">Add to cart</a>
+                       </td>
                     </tr>
-                </thead>
-                <tbody>
-                <p>${requestScope.allBooks}</p>
-                    <c:forEach items="${requestScope.allBooks}" var="bookDetails">
-                        <p>Inside the foreach loop : ${bookDetails} </p>
-                        <tr>
-                            <td>${bookDetails.ID}</td>
-                            <td>${bookDetails.title}</td>
-                            <td>${bookDetails.author}</td>
-                            <td>${bookDetails.genre}</td>
-                            <td>${bookDetails.description}</td>
-                            <td>${bookDetails.ISBN}</td>
-                            <td>
-                                <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/ViewBook" method="get">
-                                    <input type="hidden" name="bookID" value="${bookDetails.ID}">
-                                    <button type="submit" class="btn btn-warning">See detail</button>
-                                </form>
-                                <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/AddToCart" method="post">
-                                    <input type="hidden" name="bookID" value="${bookDetails.ID}">
-                                    <br><br>
-                                    <button type="submit" class="btn btn-success">Quick Add</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-            
-            <c:if test="${empty requestScope.allbooks}">
-                <div class="alert alert-info">
-                    <div align="center">No  books in stock.</div>
-                </div>
-            </c:if>
-    </body>
+                 </c:forEach>
+            </tbody>
+        </table>
+
+    <c:if test="${empty requestScope.allBooks}">
+        <div>
+            <div align="center">No  books in stock.</div>
+        </div>
+    </c:if>
+</body>
 </html>

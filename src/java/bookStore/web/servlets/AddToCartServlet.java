@@ -5,24 +5,18 @@
  */
 package bookStore.web.servlets;
 
-import bookStore.core.domain.Book;
-import bookStore.core.domain.UserRole;
-import bookStore.core.services.UserService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import bookStore.core.jdbc.BookDBHandler;
-import java.util.ArrayList;
 /**
  *
  * @author chatterburger
  */
-public class UserViewServlet extends HttpServlet {
+public class AddToCartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,15 +35,16 @@ public class UserViewServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserViewServlet</title>");            
+            out.println("<title>Servlet AddToCartServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserViewServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddToCartServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -61,22 +56,7 @@ public class UserViewServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
-        HttpSession session = request.getSession();
-        String currentUserName = (String)session.getAttribute("currentUserName");
-        String currentUserRole = (String)session.getAttribute("currentUserRole");
-        
-        
-        if(currentUserRole.equals("usr")){
-            String nextJspPage = "/views/user/browsebooks.jsp";
-            BookDBHandler db = new BookDBHandler();
-            ArrayList<Book> allBooks = db.retrieveTopNBooks(10);
-            request.setAttribute("allBooks", allBooks); // @TODO
-            request.setAttribute("numBooks", allBooks.size());
-            getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
-        } else {
-            response.sendRedirect("../login");
-        }
+        processRequest(request, response);
     }
 
     /**
