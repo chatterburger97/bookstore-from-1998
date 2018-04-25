@@ -6,6 +6,6 @@
 <form action="${pageContext.request.contextPath}/register" method="GET">
     <button value="submit">Register</button>
 </form>
-<form action="${pageContext.request.contextPath}/cart" method="GET">
+<form action="${pageContext.request.contextPath}/user/cart" method="GET">
     <button value="submit">Cart</button>
 </form>

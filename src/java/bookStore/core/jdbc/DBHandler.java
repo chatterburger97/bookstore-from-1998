@@ -29,8 +29,10 @@ public class DBHandler {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection(jdbcUrl, dbUsername, dbPwd);
             success = true;
-        } catch (ClassNotFoundException | SQLException e) {
-            success = false;
+        } catch (ClassNotFoundException e) {
+            System.out.println("class not found exception");
+        } catch( SQLException e){
+            System.out.println("sqlexception");
         }
         return success;
     }

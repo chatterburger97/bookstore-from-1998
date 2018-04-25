@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author chatterburger
  */
-public class AddToCartServlet extends HttpServlet {
+public class CartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,24 +34,22 @@ public class AddToCartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddToCartServlet</title>");            
+            out.println("<title>Servlet CartServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("method used : " + request.getMethod());
-            out.println("<h1>Servlet AddToCartServlet at " + request.getContextPath() + "</h1>");
+            
+            out.println(request.getMethod());
+            out.println("<h1>Servlet CartServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -62,45 +60,9 @@ public class AddToCartServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {    
-        HttpSession session = request.getSession();
-        session.removeAttribute("lastAddedToCart");
-        
-        if(request.getParameterMap().containsKey("bookID")){
-            Integer bookID = Integer.parseInt(request.getParameter("bookID"));
-            
-            String bookName = request.getParameter("bookName");
-            session.setAttribute("lastAddedToCart", bookName);
-            
-            
-            HashMap<Integer, Integer> cart = new HashMap<>(); // bookId, qty pairs
-            if(session.getAttribute("currentcart")!=null){
-                System.out.println("cart variable found in session");
-                cart = (HashMap<Integer, Integer>)session.getAttribute("currentcart");
-                
-                System.out.println("the cart now has the following items : ");
-                if (session.getAttribute("cart") != null) {                   
-                    Iterator it = cart.entrySet().iterator();
-                    while (it.hasNext()) {
-                        Map.Entry pair = (Map.Entry) it.next();
-                        System.out.println(pair.getKey() + " = " + pair.getValue());
-                        it.remove(); // avoids a ConcurrentModificationException
-                    }
-                }
-            }
-            if(cart.get(bookID)!=null){
-                System.out.println("Adding to cart : " + bookID);
-                cart.put(bookID, cart.get(bookID) + 1);
-            } else {
-                System.out.println("Adding new book to cart : " + bookID);
-                cart.put(bookID, 1);
-            }
-            
-            
-            session.setAttribute("cart", cart);
-            
-        }  
-        response.sendRedirect("user/view");        
+            throws ServletException, IOException {
+        String nextJspPage = "/views/user/viewcart.jsp";
+        getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
     }
 
     /**

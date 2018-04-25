@@ -44,6 +44,10 @@ public class UserService {
             return false;
         } else {
             HttpSession session = request.getSession(false);
+            if(session!=null){
+                session.invalidate();
+            }
+            session = request.getSession();
             session.setAttribute("currentUserRole",foundUser.getRole());
             session.setAttribute("currentUserName", foundUser.getName());
             

@@ -66,7 +66,7 @@ public class AdminAddBookServlet extends HttpServlet {
         String currentUserRole = (String)session.getAttribute("currentUserRole");
         
         
-        if(currentUserRole.equals("admin")){
+        if(currentUserRole!=null && currentUserRole.equals("admin")){
             String nextJspPage = "/views/admin/addbook.jsp";
             getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
         } else {
