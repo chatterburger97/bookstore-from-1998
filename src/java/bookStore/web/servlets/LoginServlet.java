@@ -41,10 +41,10 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         if(UserService.checkAccess(request, UserRole.ADMINUSR)){
-            String nextServlet = "../admin/view";
+            String nextServlet = "admin/view";
             response.sendRedirect(nextServlet);
         } else if (UserService.checkAccess(request, UserRole.USR)){
-            String nextServlet = "../user/view";
+            String nextServlet = "user/view";
             response.sendRedirect(nextServlet);
         } else {
             getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);

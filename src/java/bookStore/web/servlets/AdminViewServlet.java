@@ -39,7 +39,6 @@ public class AdminViewServlet extends HttpServlet {
         String username = (String)session.getAttribute("currentuser");
         request.authenticate(response);
         boolean authorised = UserService.checkAccess(request, UserRole.ADMINUSR);
-        
         if(authorised){
             String nextJspPage = "/views/admin/dashboard.jsp";
             request.setAttribute("username", username);
