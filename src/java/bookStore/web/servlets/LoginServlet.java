@@ -27,11 +27,6 @@ import javax.servlet.http.HttpSession;
  */
 public class LoginServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String nextJspPage = "/views/login.jsp";
-        getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
-    }
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -44,20 +39,16 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        /*
-        
-                    request.authenticate(response);
-        if(request.isUserInRole("admin")){
+
+        if(UserService.checkAccess(request, UserRole.ADMINUSR)){
             String nextServlet = "../admin/view";
             response.sendRedirect(nextServlet);
-        } else if (request.isUserInRole("usr")){
+        } else if (UserService.checkAccess(request, UserRole.USR)){
             String nextServlet = "../user/view";
             response.sendRedirect(nextServlet);
         } else {
-            request.setAttribute("loginerror", true);
-            processRequest(request, response);
+            getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
         }
-        */
         
     }
 
@@ -72,7 +63,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
