@@ -25,26 +25,32 @@ import java.util.ArrayList;
 public class BookDBHandler extends DBHandler {
 
     public ArrayList<Book> retrieveTopNBooks(int N) {
-
         ArrayList<Book> topNBooks = new ArrayList<>();
+        System.out.println("entered retrieve db function");
         try {
-            makeConnection();
-            String sqlString = "SELECT [title], [authorID], [ISBN], [description], [genre] FROM [Books] ORDER BY [title] LIMIT ?";
+            System.out.println("entered try block");
+            if(makeConnection() == false){
+                System.out.println("connection to db failed");
+                return topNBooks;
+            }
+            String sqlString = "SELECT [ID], [title], [author], [ISBN], [description], [genre] FROM [Books]";
             PreparedStatement pstmt = getConnection().prepareStatement(sqlString);
-            pstmt.setInt(1, N);
+            //  pstmt.setInt(1, N);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                String title = rs.getString(1);
-                int authorID = rs.getInt(2);
-                String ISBN = rs.getString(3);
-                String description = rs.getString(4);
-                String genre = rs.getString(5);
+                int bookID = rs.getInt(1);
+                String title = rs.getString(2);
+                String author = rs.getString(3);
+                String ISBN = rs.getString(4);
+                String description = rs.getString(5);
+                String genre = rs.getString(6);
 
-                Book retrievedBook = new Book(title, authorID, ISBN, description, genre);
+                Book retrievedBook = new Book(bookID, title, author, ISBN, description, genre);
                 topNBooks.add(retrievedBook);
 
             }
         } catch (SQLException ex) {
+            System.out.println("some error");
             Logger.getLogger(BookDBHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -56,18 +62,19 @@ public class BookDBHandler extends DBHandler {
         ArrayList<Book> booksByGenre = new ArrayList<>();
         try {
             makeConnection();
-            PreparedStatement pstmt = getConnection().prepareStatement("SELECT [title],[authorID],[ISBN],[description] FROM [Books] where [Genre]= ? ");
+            PreparedStatement pstmt = getConnection().prepareStatement("SELECT[ID], [title],[author],[ISBN],[description] FROM [Books] where [Genre]= ? ");
             pstmt.setString(1, genre);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 // genre is already defined as all the books belong to the same genre
-                String title = rs.getString(1);
-                int authorID = rs.getInt(2);
-                String ISBN = rs.getString(3);
-                String description = rs.getString(4);
+                int bookID = rs.getInt(1);
+                String title = rs.getString(2);
+                String author = rs.getString(3);
+                String ISBN = rs.getString(4);
+                String description = rs.getString(5);
 
-                Book retrievedBook = new Book(title, authorID, genre, ISBN, description);
+                Book retrievedBook = new Book(bookID, title, author, genre, ISBN, description);
                 booksByGenre.add(retrievedBook);
             }
 
