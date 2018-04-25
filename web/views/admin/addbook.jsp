@@ -12,6 +12,10 @@
         <title>Add a new book</title>
     </head>
     <body>
+        
+        <header>
+            <%@ include file="./templates/header.jspf"%>
+        </header>
         <form id="addbookform" action="${pageContext.request.contextPath}/admin/view" method="GET">
             <input type="submit" value="Back to admin dashboard"/>
         </form>
