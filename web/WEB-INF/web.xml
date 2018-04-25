@@ -69,6 +69,6 @@
         <role-name>manager</role-name>
     </security-role>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>views/user/browsebooks.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

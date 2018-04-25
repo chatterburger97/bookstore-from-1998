@@ -55,7 +55,7 @@
             
             <c:if test="${empty requestScope.allbooks}">
                 <div class="alert alert-info">
-                    <div align="center">No Room Assigned to the User.</div>
+                    <div align="center">No  books in stock.</div>
                 </div>
             </c:if>
     </body>

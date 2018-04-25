@@ -27,11 +27,6 @@ import javax.servlet.http.HttpSession;
  */
 public class LoginServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String nextJspPage = "/views/login.jsp";
-        getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
-    }
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -44,21 +39,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        /*
-        
-                    request.authenticate(response);
-        if(request.isUserInRole("admin")){
-            String nextServlet = "../admin/view";
-            response.sendRedirect(nextServlet);
-        } else if (request.isUserInRole("usr")){
-            String nextServlet = "../user/view";
-            response.sendRedirect(nextServlet);
-        } else {
-            request.setAttribute("loginerror", true);
-            processRequest(request, response);
-        }
-        */
-        
+        getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
     }
 
     /**
@@ -72,7 +53,21 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String username = (String)request.getParameter("username");
+        String password = (String)request.getParameter("password");
+       
+        if(UserService.checkAccess(request, username, password, UserRole.ADMINUSR)){
+            System.out.println("admin user found");
+            String nextServlet = "admin/view";
+            response.sendRedirect(nextServlet);
+        } else if (UserService.checkAccess(request, username, password, UserRole.USR)){
+            System.out.println("usr found");
+            String nextServlet = "user/view";
+            response.sendRedirect(nextServlet);
+        } else {
+            System.out.println("no user found, redirecting to login");
+            getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
+        }  
     }
 
     /**

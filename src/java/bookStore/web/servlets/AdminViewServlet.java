@@ -36,11 +36,9 @@ public class AdminViewServlet extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
-        String username = (String)session.getAttribute("currentuser");
-        request.authenticate(response);
-        boolean authorised = UserService.checkAccess(request, UserRole.ADMINUSR);
-        
-        if(authorised){
+        String username = (String)session.getAttribute("currentUserName");
+        String currentUserRole = (String)session.getAttribute("currentUserRole");
+        if(currentUserRole.equals("admin")){
             String nextJspPage = "/views/admin/dashboard.jsp";
             request.setAttribute("username", username);
             getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);

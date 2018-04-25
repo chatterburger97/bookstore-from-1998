@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login
-    Created on : Apr 24, 2018, 12:30:35 PM
+    Document   : register
+    Created on : Apr 25, 2018, 10:36:07 AM
     Author     : chatterburger
 --%>
 
@@ -9,17 +9,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login Page</title>
+        <title>Register page</title>
     </head>
     <body>
-        <form method="POST" action="${pageContext.request.contextPath}/login">
+        <p> Welcome, new customer. Please register a new account here : </p>
+        <form method="GET" action="${pageContext.request.contextPath}/login">
             <label for="username">User Name</label>
             <input type="text" id="username" name="username"/>
             <label for="password">Password</label>
             <input type="password" id="password" name="password"/>
             <input type="submit" value="Submit!"/>
         </form>
-        <a href="${pageContext.request.contextPath}/views/user/browsebooks.jsp">Continue to browse as guest</a>
-       
+        <a href="${pageContext.request.contextPath}/views/user/browsebooks.jsp">Home</a>
     </body>
 </html>
