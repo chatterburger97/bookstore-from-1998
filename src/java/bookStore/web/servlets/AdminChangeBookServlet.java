@@ -5,6 +5,8 @@
  */
 package bookStore.web.servlets;
 
+import bookStore.core.domain.Book;
+import bookStore.core.jdbc.BookDBHandler;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -51,6 +53,19 @@ public class AdminChangeBookServlet extends HttpServlet {
             request.setAttribute("bookName", bookName);
             nextJspPage = "/views/admin/confirmremove.jsp";
             getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
+        } else {
+            // changeType is modify
+            request.setAttribute("bookID", bookID);
+            System.out.println("book ID is not null : " + bookID);
+            BookDBHandler db = new BookDBHandler();
+            boolean result = db.makeConnection();
+          
+            Book bookToUpdate = db.retrieveBookByID(db.getConnection(), bookID);
+            request.setAttribute("bookToUpdate", bookToUpdate);
+            System.out.println("book to update is being set properly " + bookToUpdate.getTitle());
+            nextJspPage = "/views/admin/updatebookdetails.jsp";
+            getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
+            
         }
     }
 

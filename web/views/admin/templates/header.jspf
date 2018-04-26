@@ -2,6 +2,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:if test="${not empty sessionScope.currentUserID}">
+    <h2><a style="text-decoration: none" href="${pageContext.request.contextPath}/admin/view">Admin dashboard </a></h2>
     <c:if test="${sessionScope.currentUserRole  == 'admin'}">
         <p>Welcome, admin <span style="color:orange">${sessionScope.currentUserName}</span> </p>
         <p> Your user account has ${sessionScope.currentUserLoyalty} points</p>
