@@ -5,6 +5,7 @@
  */
 package bookStore.web.servlets;
 
+import bookStore.core.jdbc.BookDBHandler;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,7 +17,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author chatterburger
  */
-public class AdminChangeBookServlet extends HttpServlet {
+public class AdminChangePriceServlet extends HttpServlet {
+
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -28,23 +31,29 @@ public class AdminChangeBookServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int bookID = -1;
-        String changeType = "";
-        String nextJspPage = "";
-        if(request.getParameter("bookID")!=null && request.getParameter("changeType")!=null){
-            bookID = Integer.parseInt(request.getParameter("bookID"));
-            changeType = request.getParameter("changeType");
-        } 
-
-        if(changeType.equals("qty")){
-            request.setAttribute("bookID", bookID);
-            nextJspPage = "/views/admin/changeqty.jsp";
-            getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
-        } else if(changeType.equals("price")){
-            request.setAttribute("bookID", bookID);
-            nextJspPage = "/views/admin/changeprice.jsp";
-            getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
-        }
+        
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        int bookID = -1;
+        int newprice = -1;
+        try {
+            bookID = Integer.parseInt(request.getParameter("bookID"));
+            newprice = Integer.parseInt(request.getParameter("newprice"));
+            
+            if(bookID!=-1){
+                BookDBHandler db = new BookDBHandler();
+                db.makeConnection();
+                boolean result = db.updatePriceByID(db.getConnection(), newprice, bookID);
+                System.out.println(result);
+            }
+            response.sendRedirect("../admin/view");
+        } catch (NumberFormatException e) {
+            System.out.println("Number format exception caught"  + e.getMessage());
+            response.sendRedirect("../admin/view");
+        }
+    }
 }

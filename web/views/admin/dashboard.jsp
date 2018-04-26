@@ -27,8 +27,6 @@
                     <th><b>Book ID</b></th>
                     <th><b>Title</b></th>
                     <th><b>Author</b></th>
-                    <th><b>Genre/Category</b></th>
-                    <th><b>Short description</b></th>
                     <th><b>ISBN</b></th>  
                     <th><b>Price</b></th>  
                     <th><b>Quantity</b></th>
@@ -40,10 +38,8 @@
                        <td>${bookDetail.id}</td>
                        <td>${bookDetail.title}</td>
                        <td>${bookDetail.author}</td>
-                       <td>${bookDetail.genre}</td>
                        <td>${bookDetail.ISBN}</td>
                        <td>${bookDetail.price}</td>
-                       <td>${bookDetail.description}</td>
                        <td>${bookDetail.quantity}</td>
                        <td>
                           <a href="../admin/changeBook?bookID=${bookDetail.id}&changeType=modify">Modify book details</a>
@@ -55,7 +51,7 @@
                            <a href="../admin/changeBook?bookID=${bookDetail.id}&changeType=qty">Update stock</a>
                        </td>
                        <td>
-                           <a href="../admin/changeBook?bookID=${bookDetail.id}&changeType=qty">Update price</a>
+                           <a href="../admin/changeBook?bookID=${bookDetail.id}&changeType=price">Update price</a>
                        </td>
                     </tr>
                  </c:forEach>
