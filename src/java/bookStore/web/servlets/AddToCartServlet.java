@@ -5,6 +5,9 @@
  */
 package bookStore.web.servlets;
 
+import bookStore.core.domain.Book;
+import bookStore.core.domain.CartItem;
+import bookStore.core.jdbc.BookDBHandler;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -23,36 +26,6 @@ import javax.servlet.http.HttpSession;
 public class AddToCartServlet extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddToCartServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("method used : " + request.getMethod());
-            out.println("<h1>Servlet AddToCartServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -65,46 +38,35 @@ public class AddToCartServlet extends HttpServlet {
             throws ServletException, IOException {    
         HttpSession session = request.getSession();
         session.removeAttribute("lastAddedToCart");
+        
         if(request.getParameterMap().containsKey("bookID")){
             Integer bookID = Integer.parseInt(request.getParameter("bookID"));
-            String bookName = request.getParameter("bookName");
-            HashMap<Integer, Integer> cart = new HashMap<>(); // bookId, qty pairs
+            Book addedBook = null;
+            BookDBHandler db = new BookDBHandler();
+            if (db.makeConnection()) {
+                addedBook = db.retrieveBookByID(bookID);
+                session.setAttribute("lastAddedToCart", addedBook.getTitle());
+            }
+
+            HashMap<Integer, CartItem> cart = new HashMap<>(); // bookId, qty pairs
             if(session.getAttribute("cart")!=null){
-                cart = (HashMap<Integer, Integer>)session.getAttribute("cart");
+                cart = (HashMap<Integer, CartItem>)session.getAttribute("cart");
             } 
             if(cart.get(bookID) != null){
-                cart.put(bookID, cart.get(bookID)+ + 1);
+                CartItem item = cart.get(bookID);
+                item.setQty(item.getQty() + 1);
+                cart.put(bookID, item);
             } else {
-                cart.put(bookID, 1);
+                CartItem item = new CartItem();
+                item.setAddedBook(addedBook);
+                item.setQty(1);
+                cart.put(bookID, item);
+                
             }
-            session.setAttribute("lastAddedToCart", bookName);
+            
             session.setAttribute("cart", cart);
         }  
         response.sendRedirect("user/view");        
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

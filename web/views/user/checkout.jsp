@@ -16,6 +16,5 @@
             <%@ include file="./templates/header.jspf"%>
         </header>
         <p></p>
-        <h1>Hello World!</h1>
     </body>
 </html>

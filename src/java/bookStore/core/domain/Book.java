@@ -16,12 +16,14 @@ public class Book {
     private String genre;
     private String ISBN;
     private String description;
+    private int price;
     
     public Book(){
         
     }
-    public Book(int id, String title, String author, String genre, String ISBN, String description)
+    public Book(int id, String title, String author, String genre, String ISBN, String description, int price)
     {
+        this.price = price;
         this.id = id;
         this.title = title;
         this.description = description;
@@ -41,6 +43,9 @@ public class Book {
     public String getGenre(){
         return genre;
     }
+    public int getPrice(){
+        return price;
+    }
     public String getISBN(){
         return ISBN;
     }
@@ -59,6 +64,9 @@ public class Book {
     }
     public void setGenre(String genre){
         this.genre = genre;
+    }
+    public void setPrice(int price){
+        this.price = price;
     }
     public void setISBN(String ISBN){
         this.ISBN = ISBN;

@@ -48,6 +48,10 @@
         <servlet-name>CartServlet</servlet-name>
         <servlet-class>bookStore.web.servlets.CartServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckoutServlet</servlet-name>
+        <servlet-class>bookStore.web.servlets.CheckoutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminViewServlet</servlet-name>
         <url-pattern>/admin/view</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>CartServlet</servlet-name>
         <url-pattern>/user/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutServlet</servlet-name>
+        <url-pattern>/user/checkout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

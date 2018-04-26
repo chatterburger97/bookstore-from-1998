@@ -39,4 +39,26 @@ public class UserDBHandler extends DBHandler {
         }
         return foundUser;
     }
+
+    public User findUser(Connection connection, int ID) {
+        User foundUser = null;
+        System.out.println("searching by : " + ID);
+        try {
+            String sqlQuery = "Select [name], [password], [role], [loyaltypoints] from Users a where a.ID = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
+            pstmt.setInt(1, ID);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                System.out.println("query executed");
+                String username = rs.getString(1);
+                String password = rs.getString(2);
+                String role = rs.getString(3);
+                int loyaltypoints = rs.getInt(4);
+                foundUser = new User(ID, username, password, role, loyaltypoints);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return foundUser;
+    }
 }

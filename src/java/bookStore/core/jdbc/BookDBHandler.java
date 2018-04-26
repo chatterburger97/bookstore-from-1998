@@ -27,7 +27,7 @@ public class BookDBHandler extends DBHandler {
         System.out.println("entered retrieve db function");
         try {
             System.out.println("entered try block");
-            if(makeConnection() == false){
+            if (makeConnection() == false) {
                 System.out.println("connection to db failed");
                 return topNBooks;
             }
@@ -43,7 +43,7 @@ public class BookDBHandler extends DBHandler {
                 String description = rs.getString(5);
                 String genre = rs.getString(6);
 
-                Book retrievedBook = new Book(bookID, title, author, ISBN, description, genre);
+                Book retrievedBook = new Book(bookID, title, author, ISBN, description, genre, 0);
                 topNBooks.add(retrievedBook);
 
             }
@@ -72,7 +72,7 @@ public class BookDBHandler extends DBHandler {
                 String ISBN = rs.getString(4);
                 String description = rs.getString(5);
 
-                Book retrievedBook = new Book(bookID, title, author, genre, ISBN, description);
+                Book retrievedBook = new Book(bookID, title, author, genre, ISBN, description, 0);
                 booksByGenre.add(retrievedBook);
             }
 
@@ -82,9 +82,37 @@ public class BookDBHandler extends DBHandler {
         return booksByGenre;
     }
 
-    private void createBook(){
+    public Book retrieveBookByID(int ID) {
+        Book retrievedBook = null;
+        try {
+            makeConnection();
+            PreparedStatement pstmt = getConnection().prepareStatement("SELECT [title],[author],[ISBN],[description], [genre], [price] FROM [Books] where [ID]= ? ");
+            pstmt.setInt(1, ID);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // genre is already defined as all the books belong to the same genre
+                
+                String title = rs.getString(1);
+                String author = rs.getString(2);
+                String ISBN = rs.getString(3);
+                String description = rs.getString(4);
+                String genre = rs.getString(5);
+                int price = rs.getInt(6);
+                retrievedBook = new Book(ID, title, author, genre, ISBN, description, price);
+                
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retrievedBook;
+    }
+
+    private void createBook() {
 
     }
+
     private void updateBook(int bookID, Book newBook) {
 
     }
@@ -93,8 +121,8 @@ public class BookDBHandler extends DBHandler {
     }
 
     public boolean addNewBook(Connection con, String title, String author, String bn, String genre, String description) {
-        if(con == null){
-                return false;
+        if (con == null) {
+            return false;
         }
         try {
             System.out.println(title);
@@ -111,7 +139,7 @@ public class BookDBHandler extends DBHandler {
         } catch (SQLException ex) {
             Logger.getLogger(BookDBHandler.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("exception");
             return false;
         }
