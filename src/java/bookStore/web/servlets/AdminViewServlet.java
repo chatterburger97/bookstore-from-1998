@@ -41,6 +41,8 @@ public class AdminViewServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("currentUserName");
         String currentUserRole = (String)session.getAttribute("currentUserRole");
+        int loyalty = (int)session.getAttribute("currentUserLoyalty");
+        
         if(currentUserRole.equals("admin")){
             String nextJspPage = "/views/admin/dashboard.jsp";
             BookDBHandler db = new BookDBHandler();
@@ -48,6 +50,7 @@ public class AdminViewServlet extends HttpServlet {
             request.setAttribute("allBooks", allBooks); // @TODO
             request.setAttribute("numBooks", allBooks.size());
             request.setAttribute("username", username);
+            request.setAttribute("loyalty", loyalty);
             getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
         } else {
             response.sendRedirect("../login");

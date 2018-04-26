@@ -65,6 +65,7 @@ public class UserViewServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String currentUserName = (String)session.getAttribute("currentUserName");
         String currentUserRole = (String)session.getAttribute("currentUserRole");
+        int loyalty = (int)session.getAttribute("currentUserLoyalty");
         
         String lastAddedToCart = (String)session.getAttribute("lastAddedToCart");
         System.out.println("last added to cart : " + lastAddedToCart);
@@ -75,6 +76,7 @@ public class UserViewServlet extends HttpServlet {
             ArrayList<Book> allBooks = db.retrieveTopNBooks(10);
             request.setAttribute("allBooks", allBooks); // @TODO
             request.setAttribute("numBooks", allBooks.size());
+            request.setAttribute("loyalty", loyalty);
             getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
         } else {
             response.sendRedirect("../login");

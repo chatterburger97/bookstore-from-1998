@@ -4,5 +4,6 @@
 <c:if test="${not empty sessionScope.currentUserID}">
     <c:if test="${sessionScope.currentUserRole  == 'admin'}">
         <p>Welcome, admin <span style="color:orange">${sessionScope.currentUserName}</span> </p>
+        <p> Your user account has ${sessionScope.currentUserLoyalty} points</p>
     </c:if>
 </c:if>
