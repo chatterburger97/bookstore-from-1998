@@ -17,10 +17,45 @@
         <%@ include file="./templates/header.jspf"%>
     </header>
     <h1>All books in stock : </h1>
-    <p> Todo : show the books that are in stock <b>Update prices</b> <b>Remove book</b> </p>
     <form action="${pageContext.request.contextPath}/admin/addbook" method="GET">
         <input type="submit" value="Add new book"/>
     </form>
-
+            <h1>Latest books : </h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th><b>Book ID</b></th>
+                    <th><b>Title</b></th>
+                    <th><b>Author</b></th>
+                    <th><b>ISBN</b></th>  
+                    <th><b>Price</b></th>  
+                    <th><b>Quantity</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${requestScope.allBooks}" var="bookDetail" >
+                    <tr>
+                       <td>${bookDetail.id}</td>
+                       <td>${bookDetail.title}</td>
+                       <td>${bookDetail.author}</td>
+                       <td>${bookDetail.ISBN}</td>
+                       <td>${bookDetail.price}</td>
+                       <td>${bookDetail.quantity}</td>
+                       <td>
+                          <a href="../admin/changeBook?bookID=${bookDetail.id}&changeType=modify">Modify book details</a>
+                       </td>
+                       <td>
+                           <a href="../admin/changeBook?bookID=${bookDetail.id}&changeType=remove">Remove book</a>
+                       </td>
+                       <td>
+                           <a href="../admin/changeBook?bookID=${bookDetail.id}&changeType=qty">Update stock</a>
+                       </td>
+                       <td>
+                           <a href="../admin/changeBook?bookID=${bookDetail.id}&changeType=price&bookName=${bookDetail.title}">Update price</a>
+                       </td>
+                    </tr>
+                 </c:forEach>
+            </tbody>
+        </table>
 </body>
 </html>

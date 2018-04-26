@@ -5,8 +5,6 @@
  */
 package bookStore.web.servlets;
 
-import bookStore.core.domain.Book;
-import bookStore.core.domain.UserRole;
 import bookStore.core.jdbc.BookDBHandler;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,16 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bookStore.core.services.UserService;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpSession;
-
 /**
  *
  * @author chatterburger
  */
-public class AdminViewServlet extends HttpServlet {
+public class AdminRemoveBookServlet extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -38,20 +31,6 @@ public class AdminViewServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        HttpSession session = request.getSession();
-        String username = (String)session.getAttribute("currentUserName");
-        String currentUserRole = (String)session.getAttribute("currentUserRole");
-        if(currentUserRole.equals("admin")){
-            String nextJspPage = "/views/admin/dashboard.jsp";
-            BookDBHandler db = new BookDBHandler();
-            ArrayList<Book> allBooks = db.retrieveTopNBooks(10);
-            request.setAttribute("allBooks", allBooks); // @TODO
-            request.setAttribute("numBooks", allBooks.size());
-            request.setAttribute("username", username);
-            getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
-        } else {
-            response.sendRedirect("../login");
-        }
     }
 
     /**
@@ -65,17 +44,21 @@ public class AdminViewServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+                
+        int bookID = -1;
+        try {
+            bookID = Integer.parseInt(request.getParameter("bookID"));
+            
+            if(bookID!=-1){
+                BookDBHandler db = new BookDBHandler();
+                db.makeConnection();
+                boolean result = db.removeBookByID(db.getConnection(), bookID);
+                System.out.println(result);
+            }
+            response.sendRedirect("../admin/view");
+        } catch (Exception e) {
+            System.out.println("Could not remove book"  + e.getMessage());
+            response.sendRedirect("../admin/view");
+        }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "admin/view";
-    }// </editor-fold>
-
 }
