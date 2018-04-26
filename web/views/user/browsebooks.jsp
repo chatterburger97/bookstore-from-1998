@@ -26,7 +26,8 @@
                     <th><b>Author</b></th>
                     <th><b>Genre/Category</b></th>
                     <th><b>Short description</b></th>
-                    <th><b>ISBN</b></th>                        
+                    <th><b>ISBN</b></th>  
+                    <th><b>Price</b></th>                        
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +38,7 @@
                        <td>${bookDetail.author}</td>
                        <td>${bookDetail.genre}</td>
                        <td>${bookDetail.ISBN}</td>
+                       <td>${bookDetail.price}</td>
                        <td>${bookDetail.description}</td>
                        <td>
                           <a href="../addtocart?bookID=${bookDetail.id}">Add to cart</a>

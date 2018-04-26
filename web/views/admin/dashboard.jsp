@@ -21,6 +21,45 @@
     <form action="${pageContext.request.contextPath}/admin/addbook" method="GET">
         <input type="submit" value="Add new book"/>
     </form>
-
+            <h1>Latest books : </h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th><b>Book ID</b></th>
+                    <th><b>Title</b></th>
+                    <th><b>Author</b></th>
+                    <th><b>Genre/Category</b></th>
+                    <th><b>Short description</b></th>
+                    <th><b>ISBN</b></th>  
+                    <th><b>Price</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${requestScope.allBooks}" var="bookDetail" >
+                    <tr>
+                       <td>${bookDetail.id}</td>
+                       <td>${bookDetail.title}</td>
+                       <td>${bookDetail.author}</td>
+                       <td>${bookDetail.genre}</td>
+                       <td>${bookDetail.ISBN}</td>
+                       <td>${bookDetail.price}</td>
+                       <td>${bookDetail.description}</td>
+                       <td>${bookDetail.stock}</td>
+                       <td>
+                          <a href="../changeBook?bookID=${bookDetail.id}&changeType=modify">Modify book details</a>
+                       </td>
+                       <td>
+                           <a href="../addtocart?bookID=${bookDetail.id}&changeType=remove">Remove book</a>
+                       </td>
+                       <td>
+                           <a href="../addtocart?bookID=${bookDetail.id}&changeType=qty">Update quantity</a>
+                       </td>
+                       <td>
+                           <a href="../addtocart?bookID=${bookDetail.id}&changeType=qty">Update price</a>
+                       </td>
+                    </tr>
+                 </c:forEach>
+            </tbody>
+        </table>
 </body>
 </html>

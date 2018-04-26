@@ -31,7 +31,7 @@ public class BookDBHandler extends DBHandler {
                 System.out.println("connection to db failed");
                 return topNBooks;
             }
-            String sqlString = "SELECT [ID], [title], [author], [ISBN], [description], [genre] FROM [Books]";
+            String sqlString = "SELECT [ID], [title], [author], [ISBN], [description], [genre], [price], [quantity] FROM [Books]";
             PreparedStatement pstmt = getConnection().prepareStatement(sqlString);
             //  pstmt.setInt(1, N);
             ResultSet rs = pstmt.executeQuery();
@@ -42,8 +42,10 @@ public class BookDBHandler extends DBHandler {
                 String ISBN = rs.getString(4);
                 String description = rs.getString(5);
                 String genre = rs.getString(6);
+                int price = rs.getInt(7);
+                int quantity = rs.getInt(8);
 
-                Book retrievedBook = new Book(bookID, title, author, ISBN, description, genre, 0);
+                Book retrievedBook = new Book(bookID, title, author, ISBN, description, genre, price, quantity);
                 topNBooks.add(retrievedBook);
 
             }
@@ -60,7 +62,7 @@ public class BookDBHandler extends DBHandler {
         ArrayList<Book> booksByGenre = new ArrayList<>();
         try {
             makeConnection();
-            PreparedStatement pstmt = getConnection().prepareStatement("SELECT[ID], [title],[author],[ISBN],[description] FROM [Books] where [Genre]= ? ");
+            PreparedStatement pstmt = getConnection().prepareStatement("SELECT[ID], [title],[author],[ISBN],[description], [price], [quantity] FROM [Books] where [Genre]= ? ");
             pstmt.setString(1, genre);
             ResultSet rs = pstmt.executeQuery();
 
@@ -71,8 +73,10 @@ public class BookDBHandler extends DBHandler {
                 String author = rs.getString(3);
                 String ISBN = rs.getString(4);
                 String description = rs.getString(5);
+                int price = rs.getInt(6);
+                int qty = rs.getInt(7);
 
-                Book retrievedBook = new Book(bookID, title, author, genre, ISBN, description, 0);
+                Book retrievedBook = new Book(bookID, title, author, genre, ISBN, description, price, qty);
                 booksByGenre.add(retrievedBook);
             }
 
@@ -86,7 +90,7 @@ public class BookDBHandler extends DBHandler {
         Book retrievedBook = null;
         try {
             makeConnection();
-            PreparedStatement pstmt = getConnection().prepareStatement("SELECT [title],[author],[ISBN],[description], [genre], [price] FROM [Books] where [ID]= ? ");
+            PreparedStatement pstmt = getConnection().prepareStatement("SELECT [title],[author],[ISBN],[description], [genre], [price, [qty] FROM [Books] where [ID]= ? ");
             pstmt.setInt(1, ID);
             ResultSet rs = pstmt.executeQuery();
 
@@ -99,7 +103,8 @@ public class BookDBHandler extends DBHandler {
                 String description = rs.getString(4);
                 String genre = rs.getString(5);
                 int price = rs.getInt(6);
-                retrievedBook = new Book(ID, title, author, genre, ISBN, description, price);
+                int qty = rs.getInt(7);
+                retrievedBook = new Book(ID, title, author, genre, ISBN, description, price, qty);
                 
             }
 

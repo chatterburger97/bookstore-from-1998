@@ -5,7 +5,9 @@
  */
 package bookStore.web.servlets;
 
+import bookStore.core.domain.Book;
 import bookStore.core.domain.UserRole;
+import bookStore.core.jdbc.BookDBHandler;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bookStore.core.services.UserService;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 
@@ -40,6 +43,10 @@ public class AdminViewServlet extends HttpServlet {
         String currentUserRole = (String)session.getAttribute("currentUserRole");
         if(currentUserRole.equals("admin")){
             String nextJspPage = "/views/admin/dashboard.jsp";
+            BookDBHandler db = new BookDBHandler();
+            ArrayList<Book> allBooks = db.retrieveTopNBooks(10);
+            request.setAttribute("allBooks", allBooks); // @TODO
+            request.setAttribute("numBooks", allBooks.size());
             request.setAttribute("username", username);
             getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
         } else {
