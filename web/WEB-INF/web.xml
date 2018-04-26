@@ -52,6 +52,14 @@
         <servlet-name>CheckoutServlet</servlet-name>
         <servlet-class>bookStore.web.servlets.CheckoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminChangeBookServlet</servlet-name>
+        <servlet-class>bookStore.web.servlets.AdminChangeBookServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminChangeQty</servlet-name>
+        <servlet-class>bookStore.web.servlets.AdminChangeQty</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminViewServlet</servlet-name>
         <url-pattern>/admin/view</url-pattern>
@@ -87,6 +95,14 @@
     <servlet-mapping>
         <servlet-name>CheckoutServlet</servlet-name>
         <url-pattern>/user/checkout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminChangeBookServlet</servlet-name>
+        <url-pattern>/admin/changeBook</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminChangeQty</servlet-name>
+        <url-pattern>/admin/changeqty</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -150,4 +150,48 @@ public class BookDBHandler extends DBHandler {
         }
     }
 
+    public boolean updateQtyByID(Connection con, int newQty, int bookID) {
+        if (con == null) {
+            return false;
+        }
+        try {
+            System.out.println("BOOK ID : " + bookID);
+            String sqlString = "UPDATE [Books] SET [quantity]=? WHERE ID=?";
+            PreparedStatement pstmt = con.prepareStatement(sqlString);
+            pstmt.setInt(1, newQty);
+            pstmt.setInt(2, bookID);
+            int executeUpdate = pstmt.executeUpdate();
+            System.out.println("execute update updates some rows : " + executeUpdate);
+            return (executeUpdate > 0);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDBHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } catch (Exception e) {
+            System.out.println("exception");
+            return false;
+        }
+    }
+    
+    public boolean updatePriceByID(Connection con, int newPrice, int bookID) {
+        if (con == null) {
+            return false;
+        }
+        try {
+            System.out.println("BOOK ID : " + bookID);
+            String sqlString = "UPDATE [Books] SET [price]=? WHERE ID=?";
+            PreparedStatement pstmt = con.prepareStatement(sqlString);
+            pstmt.setInt(1, newPrice);
+            pstmt.setInt(2, bookID);
+            int executeUpdate = pstmt.executeUpdate();
+            System.out.println("execute update updates some rows : " + executeUpdate);
+            return (executeUpdate > 0);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDBHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } catch (Exception e) {
+            System.out.println("exception");
+            return false;
+        }
+    }
+
 }

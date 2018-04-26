@@ -17,12 +17,12 @@ public class Book {
     private String ISBN;
     private String description;
     private int price;
-    private int qty ;
+    private int quantity ;
     
     public Book(){
         
     }
-    public Book(int id, String title, String author, String genre, String ISBN, String description, int price, int stock)
+    public Book(int id, String title, String author, String genre, String ISBN, String description, int price, int quantity)
     {
         this.price = price;
         this.id = id;
@@ -31,7 +31,7 @@ public class Book {
         this.author= author;
         this.genre = genre;
         this.ISBN = ISBN;
-        this.qty = qty;
+        this.quantity = quantity;
     }
     public int getId(){
         return id;
@@ -54,8 +54,8 @@ public class Book {
     public String getDescription(){
         return description;
     }
-    public int getQty(){
-        return qty;
+    public int getQuantity(){
+        return quantity;
     }
     /* setters */
     public void setId(int id){
@@ -77,6 +77,6 @@ public class Book {
         this.ISBN = ISBN;
     }
     public void setQty(int newQty){
-        this.qty = newQty;
+        this.quantity = newQty;
     }
 }
