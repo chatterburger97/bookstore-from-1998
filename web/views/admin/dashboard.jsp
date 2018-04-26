@@ -16,11 +16,11 @@
     <header>
         <%@ include file="./templates/header.jspf"%>
     </header>
-    <h1>All books in stock : </h1>
     <form action="${pageContext.request.contextPath}/admin/addbook" method="GET">
         <input type="submit" value="Add new book"/>
     </form>
-            <h1>Latest books : </h1>
+
+    <h1>All books in stock : </h1>
         <table border="1">
             <thead>
                 <tr>

@@ -13,5 +13,6 @@
 <c:if test="${not empty sessionScope.currentUserID}">
     <c:if test="${sessionScope.currentUserRole  == 'usr'}">
         <p>You are logged in as user <span style="color:greenyellow">${sessionScope.currentUserName}</span> </p>
+        <p> Loyalty points remaining : ${sessionScope.currentUserLoyalty}</p>
     </c:if>
 </c:if>

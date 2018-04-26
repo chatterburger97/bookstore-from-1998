@@ -48,6 +48,7 @@ public class UserService {
             }
             session = request.getSession();
             session.setAttribute("currentUserRole",foundUser.getRole());
+            session.setAttribute("currentUserLoyalty", foundUser.getLoyaltypoints());
             session.setAttribute("currentUserName", foundUser.getUsername());
             session.setAttribute("currentUserID", foundUser.getId());
             System.out.println("current user id : " + session.getAttribute("currentUserID"));
