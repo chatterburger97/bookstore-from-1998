@@ -16,9 +16,11 @@
         <c:if test="${not empty requestScope.errorMessage}">
             <p>${errorMessage}</p>
         </c:if>
-        <p>Cart subtotal : ${requestScope.cartTotal}<p>
-        <a href="/user/cart">Cancel checkout/Back to cart</a>
-        <form action="/views/user/checkoutsuccessful.jsp" method="POST">
+        <p>Pay by card : ${requestScope.adjustedTotal}<p>
+        <a href="${pageContext.request.contextPath}/user/cart">Cancel checkout/Back to cart</a>
+        <form action="${pageContext.request.contextPath}/views/user/checkoutsuccessful.jsp" method="POST">
+            <input type="text" disabled name="creditcardnumber"/>
+            <input type="text" disabled name="CVV"/>
             <input type="submit" value="confirm checkout"/>
         </form>
     </body>

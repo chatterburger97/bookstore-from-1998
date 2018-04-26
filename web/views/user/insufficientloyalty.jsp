@@ -18,10 +18,12 @@
         </c:if>
         <p>Cart subtotal : ${requestScope.cartTotal}<p>
         <p>Your loyalty points : ${requestScope.loyaltyPoints}<p>
-        <p>Balance after using loyalty points : ${requestScope.adjustedTotal}<p>
-        <a href="/user/cart">Cancel checkout/Back to cart</a>
-        <form action="/user/checkout?method=creditcardpayment&balance=${requestScope.adjustedTotal}" method="POST">
-            <input type="submit" value="confirm checkout"/>
+        <p>Balance to pay after using loyalty points : ${requestScope.adjustedTotal}<p>
+        <a href="${pageContext.request.contextPath}/user/cart">Cancel checkout/Back to cart</a>
+        <form action="${pageContext.request.contextPath}/user/checkout" method="GET">
+            <input type="hidden" name="paymentMethod" value="creditcard"/>
+            <input type="hidden" name="adjustedTotal" value="${requestScope.adjustedTotal}"/>
+            <input type="submit" value="proceed to pay balance with creditcard"/>
         </form>
     </body>
 </html>

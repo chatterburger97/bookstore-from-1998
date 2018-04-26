@@ -62,55 +62,47 @@ public class CheckoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if(session == null || session.getAttribute("userRole") == null){
-            response.sendRedirect("/");
-        }
         String paymentMethod = request.getParameter("paymentMethod");
-        System.out.println("payment method recorded as " + paymentMethod);
-        String nextJspPage = "/views/user/viewcart.jsp";
+        System.out.println("payment method : " + paymentMethod);
+        String nextJspPage;
         if(paymentMethod.equals("loyalty")){
-            if(session!=null && session.getAttribute("currentUserID")!=null){
+            if(session == null || session.getAttribute("currentUserRole") == null){
+                System.out.println("no user role");
+                response.sendRedirect("/");
+            } else if(session.getAttribute("currentUserID")!=null){
                 UserDBHandler db = new UserDBHandler();
                 if(db.makeConnection()){
                     Connection con = db.getConnection();
-                    User foundUser = db.findUser(con,(int)session.getAttribute("currentUserID"));
-                    
+                    User foundUser = db.findUser(con,(int)session.getAttribute("currentUserID")); 
                     int cartTotal = PaymentService.getCartTotal(request);
                     int loyaltyPoints = foundUser.getLoyaltypoints();
                     if(loyaltyPoints >= cartTotal){
-                        loyaltyPoints-=cartTotal;
-                        session.setAttribute("aftercheckoutloyalty", loyaltyPoints);
+                        session.setAttribute("adjustedLoyalty", loyaltyPoints - cartTotal);
                         request.setAttribute("successmessage", "you have enough points to checkout, checkout successful");
-                        nextJspPage = "/views/user/checkoutsuccessfulpage.jsp";
+                        nextJspPage = "/views/user/checkoutsuccessful.jsp";
+                        getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
                     } else {
-
                         request.setAttribute("cartTotal", cartTotal);
                         request.setAttribute("adjustedTotal", cartTotal - loyaltyPoints);
                         request.setAttribute("loyaltyPoints", loyaltyPoints);
-                        
                         nextJspPage  = "/views/user/insufficientloyalty.jsp";
+                        getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
                     }
-                    
                 } else {
-                    // TODO set error message in session
                     request.setAttribute("errormessage", "connectivity error, please check your vpn");
-                }
-                
+                    nextJspPage  = "/user/cart";
+                    getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
+                }   
             } else {
-                // TODO set error message in session
                 response.sendRedirect("/login");
-                return;
             }
-            getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
-            
         } else if(paymentMethod.equals("creditcard")){
             nextJspPage = "/views/user/creditcardpayment.jsp";
             getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
         } else {
-            response.sendRedirect("/");
-            return;
+            System.out.println("payment method is not loyalty or creditcard");
+            response.sendRedirect("/"); 
         }
-        
     }
 
     /**
