@@ -51,7 +51,7 @@
                            <a href="../admin/changeBook?bookID=${bookDetail.id}&changeType=qty">Update stock</a>
                        </td>
                        <td>
-                           <a href="../admin/changeBook?bookID=${bookDetail.id}&changeType=price">Update price</a>
+                           <a href="../admin/changeBook?bookID=${bookDetail.id}&changeType=price&bookName=${bookDetail.title}">Update price</a>
                        </td>
                     </tr>
                  </c:forEach>

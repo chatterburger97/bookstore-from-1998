@@ -114,15 +114,26 @@ public class BookDBHandler extends DBHandler {
         return retrievedBook;
     }
 
-    private void createBook() {
 
-    }
-
-    private void updateBook(int bookID, Book newBook) {
-
-    }
-
-    private void deleteBook(int bookID) {
+    public boolean removeBookByID(Connection con, int bookID) {
+        if (con == null) {
+            return false;
+        }
+        try {
+            System.out.println("BOOK ID : " + bookID);
+            String sqlString = "DELETE FROM [Books] WHERE ID=?";
+            PreparedStatement pstmt = con.prepareStatement(sqlString);
+            pstmt.setInt(1, bookID);
+            int executeUpdate = pstmt.executeUpdate();
+            System.out.println("execute update updates some rows : " + executeUpdate);
+            return (executeUpdate > 0);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDBHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } catch (Exception e) {
+            System.out.println("exception");
+            return false;
+        }
     }
 
     public boolean addNewBook(Connection con, String title, String author, String bn, String genre, String description) {

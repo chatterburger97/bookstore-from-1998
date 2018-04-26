@@ -64,6 +64,10 @@
         <servlet-name>AdminChangePriceServlet</servlet-name>
         <servlet-class>bookStore.web.servlets.AdminChangePriceServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminRemoveBookServlet</servlet-name>
+        <servlet-class>bookStore.web.servlets.AdminRemoveBookServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminViewServlet</servlet-name>
         <url-pattern>/admin/view</url-pattern>
@@ -111,6 +115,10 @@
     <servlet-mapping>
         <servlet-name>AdminChangePriceServlet</servlet-name>
         <url-pattern>/admin/changeprice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminRemoveBookServlet</servlet-name>
+        <url-pattern>/admin/remove</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -31,6 +31,7 @@ public class AdminChangeBookServlet extends HttpServlet {
         int bookID = -1;
         String changeType = "";
         String nextJspPage = "";
+        
         if(request.getParameter("bookID")!=null && request.getParameter("changeType")!=null){
             bookID = Integer.parseInt(request.getParameter("bookID"));
             changeType = request.getParameter("changeType");
@@ -43,6 +44,12 @@ public class AdminChangeBookServlet extends HttpServlet {
         } else if(changeType.equals("price")){
             request.setAttribute("bookID", bookID);
             nextJspPage = "/views/admin/changeprice.jsp";
+            getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
+        } else if(changeType.equals("remove")){
+            request.setAttribute("bookID", bookID);
+            String bookName = request.getParameter("bookName");
+            request.setAttribute("bookName", bookName);
+            nextJspPage = "/views/admin/confirmremove.jsp";
             getServletContext().getRequestDispatcher(nextJspPage).forward(request, response);
         }
     }
