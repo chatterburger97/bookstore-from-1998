@@ -61,4 +61,16 @@ public class UserDBHandler extends DBHandler {
         }
         return foundUser;
     }
+
+    public void updateLoyaltyPointsById(Connection connection, int id, int adjustedLoyalty) {
+        try {
+            String sqlQuery = "UPDATE [Users] SET [loyaltypoints]=? WHERE [ID] = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
+            pstmt.setInt(1, adjustedLoyalty);
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
