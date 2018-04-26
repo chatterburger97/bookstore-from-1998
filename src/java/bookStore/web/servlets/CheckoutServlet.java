@@ -77,6 +77,12 @@ public class CheckoutServlet extends HttpServlet {
                     int cartTotal = PaymentService.getCartTotal(request);
                     int loyaltyPoints = foundUser.getLoyaltypoints();
                     if(loyaltyPoints >= cartTotal){
+
+                        if(request.getAttribute("deductLoyalty")!=null){
+                            int adjustedLoyalty = loyaltyPoints - cartTotal;
+                            db.updateLoyaltyPointsById(con, foundUser.getId(),adjustedLoyalty);
+                        }
+
                         session.setAttribute("adjustedLoyalty", loyaltyPoints - cartTotal);
                         request.setAttribute("successmessage", "you have enough points to checkout, checkout successful");
                         nextJspPage = "/views/user/checkoutsuccessful.jsp";
