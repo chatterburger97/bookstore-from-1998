@@ -86,17 +86,15 @@ public class BookDBHandler extends DBHandler {
         return booksByGenre;
     }
 
-    public Book retrieveBookByID(int ID) {
+    public Book retrieveBookByID(Connection con, int ID) {
         Book retrievedBook = null;
         try {
             makeConnection();
-            PreparedStatement pstmt = getConnection().prepareStatement("SELECT [title],[author],[ISBN],[description], [genre], [price, [qty] FROM [Books] where [ID]= ? ");
+            PreparedStatement pstmt = con.prepareStatement("SELECT [title],[author],[ISBN],[description], [genre], [price], [quantity] FROM [Books] where [ID]= ? ");
             pstmt.setInt(1, ID);
             ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()) {
-                // genre is already defined as all the books belong to the same genre
-                
+            while (rs.next()) {               
                 String title = rs.getString(1);
                 String author = rs.getString(2);
                 String ISBN = rs.getString(3);
@@ -193,6 +191,31 @@ public class BookDBHandler extends DBHandler {
             PreparedStatement pstmt = con.prepareStatement(sqlString);
             pstmt.setInt(1, newPrice);
             pstmt.setInt(2, bookID);
+            int executeUpdate = pstmt.executeUpdate();
+            System.out.println("execute update updates some rows : " + executeUpdate);
+            return (executeUpdate > 0);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDBHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } catch (Exception e) {
+            System.out.println("exception");
+            return false;
+        }
+    }
+    
+    public boolean updateTitleAuthorISBNGenreByID(Connection con, int ID, String newtitle, String newAuthor, String newISBN, String newGenre){
+                if (con == null) {
+            return false;
+        }
+        try {
+            System.out.println("BOOK ID : " + ID);
+            String sqlString = "UPDATE [Books] SET [title]=?, [author] = ?, [ISBN] = ?, [genre] = ?  WHERE ID=?";
+            PreparedStatement pstmt = con.prepareStatement(sqlString);
+            pstmt.setString(1,newtitle);
+            pstmt.setString(2, newAuthor);
+            pstmt.setString(3, newISBN);
+            pstmt.setString(4, newGenre);
+            pstmt.setInt(5, ID);
             int executeUpdate = pstmt.executeUpdate();
             System.out.println("execute update updates some rows : " + executeUpdate);
             return (executeUpdate > 0);

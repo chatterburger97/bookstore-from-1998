@@ -16,11 +16,8 @@
         <header>
             <%@ include file="./templates/header.jspf"%>
         </header>
-        <form id="addbookform" action="${pageContext.request.contextPath}/admin/view" method="GET">
-            <input type="submit" value="Back to admin dashboard"/>
-        </form>
         <p style="color:red">${requestScope.responsemessage}</p>
-        <p> add a new book </p>
+        <p> Add a new book :  </p>
         <form action="${pageContext.request.contextPath}/admin/addbook" method="POST">
             <label for="title">Title : </label>
             <input id="title" name="title" type="text"/>

@@ -44,7 +44,7 @@ public class AddToCartServlet extends HttpServlet {
             Book addedBook = null;
             BookDBHandler db = new BookDBHandler();
             if (db.makeConnection()) {
-                addedBook = db.retrieveBookByID(bookID);
+                addedBook = db.retrieveBookByID(db.getConnection(), bookID);
                 session.setAttribute("lastAddedToCart", addedBook.getTitle());
             }
 
